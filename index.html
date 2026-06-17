@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PALOMA – Agencia de Enfermería y Cuidadores</title>
+  <meta name="description" content="Cuidadores y enfermeros certificados para ti o tus seres queridos. Atención 24/7 en la Ciudad de México.">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:       #2563EB;
+      --blue-dark:  #1D4ED8;
+      --blue-light: #3B82F6;
+      --sky:        #EFF6FF;
+      --sky-mid:    #DBEAFE;
+      --white:      #FFFFFF;
+      --ink:        #1E3A5F;
+      --muted:      #64748B;
+      --green:      #22C55E;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      color: var(--ink); background: var(--white); line-height: 1.6;
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--sky-mid);
+      padding: 0 24px; height: 68px;
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: 0 2px 16px rgba(37,99,235,0.07);
+    }
+
+    .logo {
+      display: flex; align-items: center; gap: 11px;
+      text-decoration: none; color: var(--ink);
+    }
+    .logo-text { display: flex; flex-direction: column; line-height: 1; }
+    .logo-name { font-size: 1.35rem; font-weight: 900; color: var(--blue); letter-spacing: 2.5px; }
+    .logo-sub  { font-size: 0.6rem; color: var(--muted); letter-spacing: 0.8px; text-transform: uppercase; margin-top: 2px; }
+
+    nav { display: flex; align-items: center; gap: 8px; }
+    nav a {
+      text-decoration: none; color: var(--muted); font-size: 0.88rem;
+      font-weight: 500; padding: 6px 14px; border-radius: 8px;
+      transition: color .2s, background .2s;
+    }
+    nav a:hover { color: var(--blue); background: var(--sky); }
+    .nav-cta {
+      background: var(--blue) !important; color: white !important;
+      padding: 8px 18px !important; border-radius: 50px !important; font-weight: 600 !important;
+      transition: background .25s, transform .25s !important;
+    }
+    .nav-cta:hover { background: var(--blue-dark) !important; transform: translateY(-1px); }
+    .nav-wa {
+      background: #25D366 !important; display: inline-flex; align-items: center; gap: 6px;
+    }
+    .nav-wa:hover { background: #1ebe57 !important; }
+
+    /* ─── HERO ─── */
+    .hero {
+      background: linear-gradient(145deg, #EFF6FF 0%, #DBEAFE 50%, #E0F2FE 100%);
+      padding: 72px 24px 100px; position: relative; overflow: hidden;
+    }
+    .hero-video {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; z-index: 0;
+      pointer-events: none;
+    }
+    .hero-overlay {
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(135deg, rgba(8,18,70,.83) 0%, rgba(15,35,95,.77) 60%, rgba(8,20,65,.86) 100%);
+      z-index: 1;
+    }
+    .hero::after {
+      content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 90px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 90'%3E%3Cpath fill='%23ffffff' d='M0,48L60,53.3C120,59,240,69,360,64C480,59,600,37,720,32C840,27,960,37,1080,42.7C1200,48,1320,48,1380,48L1440,48L1440,90L1380,90C1320,90,1200,90,1080,90C960,90,840,90,720,90C600,90,480,90,360,90C240,90,120,90,60,90L0,90Z'/%3E%3C/svg%3E") no-repeat bottom / cover;
+      z-index: 3;
+    }
+    .hero-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 460px;
+      gap: 52px; align-items: center; width: 100%;
+      position: relative; z-index: 2;
+    }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(255,255,255,.13); color: rgba(255,255,255,.95); font-size: 0.78rem; font-weight: 700;
+      padding: 6px 16px; border-radius: 50px; border: 1.5px solid rgba(255,255,255,.25);
+      margin-bottom: 22px;
+    }
+    .badge-dot { width: 8px; height: 8px; background: #4ADE80; border-radius: 50%; }
+
+    .hero h1 {
+      font-size: clamp(2rem, 3.8vw, 3.1rem);
+      font-weight: 900; line-height: 1.18; color: white; margin-bottom: 18px;
+    }
+    .hero h1 em { font-style: normal; color: #93C5FD; }
+    .hero-desc { font-size: 1.05rem; color: rgba(255,255,255,.80); margin-bottom: 36px; max-width: 480px; }
+
+    /* ─── BUTTONS ─── */
+    .btn-stack { display: flex; flex-direction: column; gap: 13px; }
+    .hero .btn-stack { flex-direction: row; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 11px;
+      padding: 15px 24px; border-radius: 14px; font-size: 0.97rem; font-weight: 700;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: transform .3s, box-shadow .3s, background .3s, color .3s;
+      width: fit-content; white-space: nowrap;
+    }
+    .btn svg { flex-shrink: 0; }
+    .btn:hover { transform: translateY(-3px); }
+    .btn-call { background: var(--blue); color: white; box-shadow: 0 4px 18px rgba(37,99,235,.32); }
+    .btn-call:hover { background: var(--blue-dark); box-shadow: 0 8px 28px rgba(37,99,235,.45); }
+    .btn-wa {
+      background: #25D366; color: white;
+      box-shadow: 0 4px 18px rgba(37,211,102,.28);
+      animation: wapulse 2.5s ease-in-out infinite;
+    }
+    .btn-wa:hover { background: #1ebe57; box-shadow: 0 8px 28px rgba(37,211,102,.5); animation: none; }
+    .btn-fb { background: white; color: #1877F2; border: 2px solid #1877F2; }
+    .btn-fb:hover { background: #1877F2; color: white; box-shadow: 0 6px 22px rgba(24,119,242,.32); }
+    .btn-outline-white {
+      background: transparent; color: white; border: 2px solid rgba(255,255,255,.65);
+      box-shadow: none;
+    }
+    .btn-outline-white:hover {
+      background: rgba(255,255,255,.15); border-color: white; box-shadow: none;
+    }
+    @keyframes wapulse {
+      0%,100% { box-shadow: 0 4px 18px rgba(37,211,102,.28); }
+      50%      { box-shadow: 0 4px 30px rgba(37,211,102,.52), 0 0 0 9px rgba(37,211,102,.09); }
+    }
+
+    /* ─── HERO SOCIAL PROOF ─── */
+    .hero-social {
+      display: flex; align-items: center; gap: 14px;
+      margin-top: 28px; padding-top: 22px;
+      border-top: 1px solid rgba(255,255,255,.18); flex-wrap: wrap;
+    }
+    .hero-avatars { display: flex; }
+    .hero-av {
+      width: 34px; height: 34px; border-radius: 50%;
+      border: 2.5px solid rgba(255,255,255,.7);
+      margin-right: -10px; display: flex; align-items: center; justify-content: center;
+      font-size: .72rem; font-weight: 800; color: white; flex-shrink: 0;
+    }
+    .hero-av-a { background: #3B82F6; }
+    .hero-av-b { background: #8B5CF6; }
+    .hero-av-c { background: #EC4899; }
+    .hero-av-more { background: rgba(255,255,255,.22); }
+    .hero-social-info { margin-left: 18px; }
+    .hero-social-info strong { color: white; font-size: .88rem; display: block; line-height: 1.3; }
+    .hero-social-stars { color: #FBBF24; font-size: .82rem; margin-top: 3px; display: block; }
+
+    /* ─── HERO CARD ─── */
+    .hero-card {
+      background: rgba(255,255,255,.1); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+      border: 1.5px solid rgba(255,255,255,.2); border-radius: 28px; padding: 36px 32px 32px;
+      box-shadow: 0 24px 64px rgba(0,0,0,.28); position: relative; text-align: center;
+    }
+    .hero-card-chip {
+      position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+      background: var(--green); color: white; font-size: 0.7rem; font-weight: 700;
+      letter-spacing: .5px; padding: 5px 16px; border-radius: 50px; white-space: nowrap;
+    }
+    .nurse-wrap { margin: 8px auto 22px; }
+    .hero-card h3 { font-size: 1.05rem; font-weight: 800; color: white; margin-bottom: 6px; }
+    .hero-card p  { font-size: 0.85rem; color: rgba(255,255,255,.72); margin-bottom: 24px; }
+    .stats { display: flex; justify-content: space-around; border-top: 1px solid rgba(255,255,255,.15); padding-top: 22px; }
+    .stat { text-align: center; }
+    .stat-n { font-size: 1.5rem; font-weight: 900; color: #93C5FD; line-height: 1; }
+    .stat-l { font-size: 0.68rem; color: rgba(255,255,255,.65); margin-top: 3px; line-height: 1.3; }
+
+    /* ─── TRUST BAR ─── */
+    .trust {
+      background: var(--blue); padding: 18px 24px;
+      display: flex; align-items: center; justify-content: center; gap: 36px; flex-wrap: wrap;
+    }
+    .trust-item {
+      display: flex; align-items: center; gap: 8px;
+      color: rgba(255,255,255,.9); font-size: 0.86rem; font-weight: 500;
+    }
+
+    /* ─── SECTION SHARED ─── */
+    .section-head { text-align: center; margin-bottom: 52px; }
+    .section-label {
+      display: inline-block; color: var(--blue); font-size: 0.76rem; font-weight: 800;
+      letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 10px;
+    }
+    .section-head h2 { font-size: clamp(1.7rem, 3vw, 2.4rem); font-weight: 900; color: var(--ink); margin-bottom: 13px; }
+    .section-head p  { color: var(--muted); max-width: 520px; margin: 0 auto; }
+
+    /* ─── SERVICES ─── */
+    .services { padding: 88px 24px; background: white; }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 22px; max-width: 1100px; margin: 0 auto;
+    }
+    .svc-card {
+      background: white; border: 1.5px solid var(--sky-mid);
+      border-radius: 20px; padding: 30px 26px; transition: border-color .3s, box-shadow .3s, transform .3s;
+    }
+    .svc-card:hover { border-color: var(--blue-light); box-shadow: 0 16px 48px rgba(37,99,235,.13); transform: translateY(-5px); }
+    .svc-icon {
+      width: 54px; height: 54px; background: var(--sky); border-radius: 15px;
+      display: flex; align-items: center; justify-content: center; font-size: 1.65rem; margin-bottom: 18px;
+    }
+    .svc-card h3 { font-size: 1rem; font-weight: 800; color: var(--ink); margin-bottom: 8px; }
+    .svc-card p  { font-size: 0.86rem; color: var(--muted); line-height: 1.65; }
+
+    /* ─── WHY US ─── */
+    .why { background: linear-gradient(140deg, #1D4ED8 0%, #2563EB 100%); padding: 88px 24px; color: white; }
+    .why .section-label { color: rgba(255,255,255,.65); }
+    .why .section-head h2 { color: white; }
+    .why .section-head p  { color: rgba(255,255,255,.75); }
+    .why-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 36px; max-width: 1000px; margin: 0 auto;
+    }
+    .why-item { text-align: center; }
+    .why-icon { font-size: 2.5rem; margin-bottom: 14px; display: block; }
+    .why-item h3 { font-size: 1rem; font-weight: 800; margin-bottom: 8px; }
+    .why-item p  { font-size: 0.85rem; opacity: .78; line-height: 1.6; }
+
+    /* ─── CONTACT ─── */
+    .contact { padding: 88px 24px; background: var(--sky); }
+    .contact-card {
+      max-width: 700px; margin: 0 auto; background: white; border-radius: 28px;
+      padding: 56px 48px; text-align: center; box-shadow: 0 24px 64px rgba(37,99,235,.12);
+    }
+    .contact-card h2 { font-size: 2rem; font-weight: 900; color: var(--ink); margin-bottom: 12px; }
+    .contact-card > p { color: var(--muted); margin-bottom: 36px; }
+    .contact-btns { display: flex; flex-direction: column; gap: 14px; align-items: center; }
+    .contact-btns .btn { min-width: 300px; justify-content: center; }
+
+    /* ─── CHAT WIDGET ─── */
+    .chat-trigger {
+      position: fixed; bottom: 24px; right: 24px; z-index: 300;
+      width: 62px; height: 62px; background: var(--blue); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 6px 28px rgba(37,99,235,.45);
+      cursor: pointer; border: none;
+      transition: transform .25s, box-shadow .25s;
+      animation: chatpulse 3s ease-in-out infinite;
+    }
+    .chat-trigger:hover { transform: scale(1.1); animation: none; }
+    @keyframes chatpulse {
+      0%,100% { box-shadow: 0 6px 28px rgba(37,99,235,.45); }
+      50%      { box-shadow: 0 6px 40px rgba(37,99,235,.65), 0 0 0 12px rgba(37,99,235,.08); }
+    }
+    .chat-notif {
+      position: absolute; top: -3px; right: -3px;
+      width: 20px; height: 20px; background: #EF4444;
+      border-radius: 50%; border: 2px solid white;
+      font-size: .65rem; font-weight: 800; color: white;
+      display: flex; align-items: center; justify-content: center;
+      animation: notifpop .4s cubic-bezier(.34,1.56,.64,1);
+    }
+    @keyframes notifpop { from { transform: scale(0); } to { transform: scale(1); } }
+
+    .chat-window {
+      position: fixed; bottom: 100px; right: 24px; z-index: 299;
+      width: 360px; max-height: 570px;
+      background: white; border-radius: 22px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.18);
+      display: flex; flex-direction: column; overflow: hidden;
+      transform: scale(0.85) translateY(20px); transform-origin: bottom right;
+      opacity: 0; pointer-events: none;
+      transition: transform .3s cubic-bezier(.34,1.56,.64,1), opacity .25s;
+    }
+    .chat-window.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
+
+    .chat-header {
+      background: linear-gradient(135deg, var(--blue-dark), var(--blue));
+      padding: 14px 16px; display: flex; align-items: center; gap: 11px; flex-shrink: 0;
+    }
+    .chat-avatar {
+      width: 40px; height: 40px; background: rgba(255,255,255,.18); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .chat-hinfo { flex: 1; }
+    .chat-hname   { color: white; font-size: .93rem; font-weight: 800; line-height: 1; }
+    .chat-hstatus { color: rgba(255,255,255,.8); font-size: .7rem; margin-top: 3px; display: flex; align-items: center; gap: 4px; }
+    .chat-sdot    { width: 7px; height: 7px; background: #4ADE80; border-radius: 50%; }
+    .chat-close {
+      background: rgba(255,255,255,.15); border: none; cursor: pointer;
+      width: 30px; height: 30px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 1.1rem; line-height: 1;
+      transition: background .2s; flex-shrink: 0;
+    }
+    .chat-close:hover { background: rgba(255,255,255,.28); }
+
+    .chat-body {
+      flex: 1; overflow-y: auto; padding: 16px 13px;
+      display: flex; flex-direction: column; gap: 9px; scroll-behavior: smooth;
+    }
+    .chat-body::-webkit-scrollbar { width: 4px; }
+    .chat-body::-webkit-scrollbar-track { background: transparent; }
+    .chat-body::-webkit-scrollbar-thumb { background: var(--sky-mid); border-radius: 4px; }
+
+    .cmsg { display: flex; gap: 7px; align-items: flex-end; max-width: 100%; }
+    .cmsg.bot  { align-self: flex-start; }
+    .cmsg.user { align-self: flex-end; flex-direction: row-reverse; }
+    .cmsg-icon {
+      width: 26px; height: 26px; border-radius: 50%; background: var(--sky-mid);
+      flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: .85rem;
+    }
+    .cmsg-bubble {
+      padding: 9px 13px; border-radius: 15px;
+      font-size: .87rem; line-height: 1.5; max-width: 235px; word-wrap: break-word;
+    }
+    .cmsg.bot  .cmsg-bubble { background: var(--sky); color: var(--ink); border-bottom-left-radius: 4px; }
+    .cmsg.user .cmsg-bubble { background: var(--blue); color: white; border-bottom-right-radius: 4px; }
+
+    .typing .cmsg-bubble { background: var(--sky); padding: 13px 16px; }
+    .tdots { display: flex; gap: 4px; align-items: center; }
+    .tdots span {
+      width: 7px; height: 7px; background: var(--muted); border-radius: 50%; animation: tdot 1.4s infinite;
+    }
+    .tdots span:nth-child(2) { animation-delay: .2s; }
+    .tdots span:nth-child(3) { animation-delay: .4s; }
+    @keyframes tdot {
+      0%,60%,100% { transform: translateY(0); opacity: .4; }
+      30%          { transform: translateY(-5px); opacity: 1; }
+    }
+
+    .faq-grid { display: flex; flex-direction: column; gap: 6px; margin-top: 2px; align-self: stretch; }
+    .faq-btn {
+      background: white; color: var(--blue); border: 1.5px solid var(--sky-mid);
+      border-radius: 50px; padding: 9px 15px; font-size: .81rem; font-weight: 600;
+      cursor: pointer; text-align: left; transition: background .2s, border-color .2s, transform .15s;
+      line-height: 1.3; font-family: inherit;
+    }
+    .faq-btn:hover { background: var(--sky); border-color: var(--blue); transform: translateX(3px); }
+
+    .chat-input-row {
+      padding: 9px 11px; border-top: 1px solid var(--sky-mid);
+      display: flex; gap: 7px; align-items: center; flex-shrink: 0;
+    }
+    .chat-input {
+      flex: 1; border: 1.5px solid var(--sky-mid); border-radius: 50px;
+      padding: 9px 15px; font-size: .86rem; color: var(--ink);
+      outline: none; font-family: inherit; transition: border-color .2s;
+    }
+    .chat-input:focus { border-color: var(--blue); }
+    .chat-input::placeholder { color: #94A3B8; }
+    .chat-send {
+      width: 38px; height: 38px; border-radius: 50%; background: var(--blue);
+      border: none; cursor: pointer; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s, transform .15s;
+    }
+    .chat-send:hover { background: var(--blue-dark); transform: scale(1.08); }
+
+    .chat-wa-cta {
+      margin: 0 11px 11px;
+      background: #25D366; color: white; border: none; border-radius: 12px;
+      padding: 12px 14px; font-size: .87rem; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      gap: 8px; text-decoration: none; transition: background .2s, transform .2s; flex-shrink: 0;
+    }
+    .chat-wa-cta:hover { background: #1ebe57; transform: translateY(-1px); }
+
+    /* ─── FOOTER ─── */
+    footer { background: var(--ink); color: rgba(255,255,255,.75); padding: 40px 24px; text-align: center; }
+    .footer-logo { font-size: 1.5rem; font-weight: 900; letter-spacing: 3px; color: white; display: block; margin-bottom: 6px; }
+    footer p  { font-size: 0.85rem; margin-bottom: 4px; }
+    footer a  { color: rgba(255,255,255,.7); text-decoration: none; }
+    footer a:hover { color: white; }
+    .footer-copy { margin-top: 20px; font-size: 0.75rem; opacity: .45; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 820px) {
+      .hero-inner { grid-template-columns: 1fr; text-align: center; }
+      .hero-desc  { margin-left: auto; margin-right: auto; }
+      .btn-stack  { align-items: center; }
+      .hero .btn-stack { flex-direction: column; }
+      .btn        { width: 100%; max-width: 360px; justify-content: center; }
+      .hero-card  { max-width: 420px; margin: 0 auto; }
+      nav a:not(.nav-cta) { display: none; }
+      .trust      { gap: 20px; }
+      .hero-social { justify-content: center; }
+    }
+    @media (max-width: 480px) {
+      .hero { padding: 52px 16px 90px; }
+      .services, .why, .contact { padding: 64px 16px; }
+      .contact-card { padding: 40px 22px; }
+      .contact-btns .btn { min-width: unset; }
+      .chat-window { width: calc(100vw - 20px); right: 10px; bottom: 88px; max-height: 72vh; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════ HEADER ═══════════════ -->
+<header>
+  <a href="#" class="logo">
+    <img src="logo.png" alt="PALOMA" height="44" style="border-radius:10px;display:block;">
+    <div class="logo-text">
+      <span class="logo-name">PALOMA</span>
+      <span class="logo-sub">Enfermería &amp; Cuidadores</span>
+    </div>
+  </a>
+  <nav>
+    <a href="#servicios">Servicios</a>
+    <a href="#nosotros">Nosotros</a>
+    <a href="#contacto">Contacto</a>
+    <a href="https://wa.me/525615803125?text=Hola%2C%20me%20gustar%C3%ADa%20obtener%20informaci%C3%B3n%20sobre%20los%20servicios%20de%20cuidadores." class="nav-cta nav-wa" target="_blank" rel="noopener">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      WhatsApp
+    </a>
+  </nav>
+</header>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero">
+  <video class="hero-video" autoplay loop muted playsinline>
+    <source src="video-problema-solucion.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="badge">
+        <span class="badge-dot"></span>
+        Personal disponible 24 / 7
+      </div>
+      <h1>Cuidado experto<br>con <em>corazón y calidez</em><br>para quienes más amas</h1>
+      <p class="hero-desc">
+        Somos <strong>PALOMA</strong>, una agencia especializada en enfermería domiciliaria y cuidadores profesionales.
+        Conectamos a las familias con el personal de salud más confiable y capacitado.
+      </p>
+      <div class="btn-stack">
+        <a href="https://wa.me/525615803125?text=Hola%2C%20me%20gustar%C3%ADa%20obtener%20informaci%C3%B3n%20sobre%20los%20servicios%20de%20cuidadores." class="btn btn-wa" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Solicitar servicio
+        </a>
+        <a href="#servicios" class="btn btn-outline-white">
+          Ver servicios
+        </a>
+      </div>
+      <div class="hero-social">
+        <div class="hero-avatars">
+          <div class="hero-av hero-av-a">MR</div>
+          <div class="hero-av hero-av-b">LC</div>
+          <div class="hero-av hero-av-c">GP</div>
+          <div class="hero-av hero-av-more">+</div>
+        </div>
+        <div class="hero-social-info">
+          <strong>+500 familias confían en Paloma</strong>
+          <span class="hero-social-stars">★★★★★ 4.9 de satisfacción</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-card">
+      <span class="hero-card-chip">✓ Personal 100 % certificado</span>
+      <div class="nurse-wrap">
+        <svg width="200" height="220" viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="60" y="118" width="80" height="74" rx="10" fill="#BFDBFE"/>
+          <rect x="88" y="126" width="24" height="6" rx="3" fill="#2563EB"/>
+          <rect x="97" y="120" width="6" height="18" rx="3" fill="#2563EB"/>
+          <rect x="88" y="102" width="24" height="20" rx="6" fill="#FCD34D"/>
+          <ellipse cx="100" cy="80" rx="32" ry="34" fill="#FCD34D"/>
+          <ellipse cx="100" cy="55" rx="32" ry="14" fill="#78350F"/>
+          <path d="M68 65 Q65 90 70 104" stroke="#78350F" stroke-width="9" stroke-linecap="round" fill="none"/>
+          <path d="M132 65 Q135 90 130 104" stroke="#78350F" stroke-width="9" stroke-linecap="round" fill="none"/>
+          <ellipse cx="88" cy="80" rx="4" ry="4.5" fill="#1E3A5F"/>
+          <ellipse cx="112" cy="80" rx="4" ry="4.5" fill="#1E3A5F"/>
+          <circle cx="90" cy="78.5" r="1.5" fill="white"/>
+          <circle cx="114" cy="78.5" r="1.5" fill="white"/>
+          <path d="M90 94 Q100 102 110 94" stroke="#92400E" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+          <rect x="76" y="49" width="48" height="14" rx="4" fill="white" stroke="#DBEAFE" stroke-width="1.5"/>
+          <rect x="91" y="44" width="18" height="9" rx="3" fill="white" stroke="#DBEAFE" stroke-width="1.5"/>
+          <rect x="96.5" y="46" width="7" height="2" rx="1" fill="#2563EB"/>
+          <rect x="99" y="44.5" width="2" height="5" rx="1" fill="#2563EB"/>
+          <rect x="28" y="120" width="35" height="16" rx="8" fill="#BFDBFE"/>
+          <rect x="137" y="120" width="35" height="16" rx="8" fill="#BFDBFE"/>
+          <ellipse cx="34" cy="128" rx="10" ry="9" fill="#FCD34D"/>
+          <ellipse cx="166" cy="128" rx="10" ry="9" fill="#FCD34D"/>
+          <rect x="154" y="108" width="24" height="32" rx="4" fill="white" stroke="#CBD5E1" stroke-width="1.5"/>
+          <rect x="159" y="104" width="14" height="8" rx="3" fill="#94A3B8"/>
+          <line x1="159" y1="121" x2="173" y2="121" stroke="#CBD5E1" stroke-width="1.5"/>
+          <line x1="159" y1="126" x2="173" y2="126" stroke="#CBD5E1" stroke-width="1.5"/>
+          <line x1="159" y1="131" x2="168" y2="131" stroke="#CBD5E1" stroke-width="1.5"/>
+          <path d="M76 112 Q62 124 64 136 Q66 148 76 146" stroke="#94A3B8" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+          <circle cx="76" cy="148" r="6" fill="#64748B"/>
+          <circle cx="76" cy="148" r="3" fill="#475569"/>
+          <rect x="70" y="188" width="24" height="22" rx="5" fill="#93C5FD"/>
+          <rect x="106" y="188" width="24" height="22" rx="5" fill="#93C5FD"/>
+          <rect x="66" y="204" width="30" height="10" rx="5" fill="white" stroke="#CBD5E1" stroke-width="1.5"/>
+          <rect x="104" y="204" width="30" height="10" rx="5" fill="white" stroke="#CBD5E1" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <h3>Cuidadores profesionales<br>a tu alcance</h3>
+      <p>Personal certificado, con experiencia y vocación de servicio</p>
+      <div class="stats">
+        <div class="stat"><div class="stat-n">+5</div><div class="stat-l">Años de<br>experiencia</div></div>
+        <div class="stat"><div class="stat-n">24/7</div><div class="stat-l">Atención<br>disponible</div></div>
+        <div class="stat"><div class="stat-n">100%</div><div class="stat-l">Personal<br>verificado</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ TRUST BAR ═══════════════ -->
+<div class="trust">
+  <div class="trust-item">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(255,255,255,.85)"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    Personal 100% verificado
+  </div>
+  <div class="trust-item">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(255,255,255,.85)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+    Atención 24 horas
+  </div>
+  <div class="trust-item">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(255,255,255,.85)"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
+    Trato humano y personalizado
+  </div>
+  <div class="trust-item">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(255,255,255,.85)"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+    Respuesta en minutos
+  </div>
+</div>
+
+<!-- ═══════════════ SERVICES ═══════════════ -->
+<section id="servicios" class="services">
+  <div class="section-head">
+    <span class="section-label">Lo que ofrecemos</span>
+    <h2>Nuestros Servicios</h2>
+    <p>Atención profesional y personalizada para cada necesidad de cuidado en casa</p>
+  </div>
+  <div class="services-grid">
+    <div class="svc-card"><div class="svc-icon">👴</div><h3>Cuidadores de Adultos Mayores</h3><p>Personal especializado para el acompañamiento, asistencia diaria y cuidado integral de personas mayores en la comodidad del hogar.</p></div>
+    <div class="svc-card"><div class="svc-icon">🏥</div><h3>Enfermería Domiciliaria</h3><p>Enfermeros y enfermeras titulados para aplicación de medicamentos, curaciones, monitoreo de signos vitales y seguimiento médico.</p></div>
+    <div class="svc-card"><div class="svc-icon">🩺</div><h3>Cuidados Post-operatorios</h3><p>Acompañamiento especializado durante la recuperación después de cirugías, garantizando bienestar y evolución favorable.</p></div>
+    <div class="svc-card"><div class="svc-icon">🌙</div><h3>Guardias Nocturnas</h3><p>Cobertura nocturna para pacientes que requieren supervisión constante, permitiendo a la familia descansar con plena tranquilidad.</p></div>
+    <div class="svc-card"><div class="svc-icon">♿</div><h3>Cuidados para Discapacidad</h3><p>Apoyo integral y adaptado para personas con movilidad reducida o necesidades especiales, promoviendo su autonomía y bienestar.</p></div>
+    <div class="svc-card"><div class="svc-icon">👶</div><h3>Cuidados Pediátricos</h3><p>Cuidadores especializados en el cuidado de niños y bebés, con experiencia en pediatría y certificación en primeros auxilios.</p></div>
+  </div>
+</section>
+
+<!-- ═══════════════ WHY US ═══════════════ -->
+<section id="nosotros" class="why">
+  <div class="section-head">
+    <span class="section-label">¿Por qué elegirnos?</span>
+    <h2>Tu confianza es nuestra<br>mayor responsabilidad</h2>
+    <p>Cada miembro del equipo es seleccionado con rigor para garantizar el mejor cuidado</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-item"><span class="why-icon">🔍</span><h3>Personal verificado</h3><p>Revisamos antecedentes, certificaciones y referencias de cada profesional antes de integrarlo a nuestro equipo.</p></div>
+    <div class="why-item"><span class="why-icon">📋</span><h3>Experiencia comprobada</h3><p>Todos nuestros cuidadores y enfermeros cuentan con experiencia real y documentada en el cuidado de pacientes.</p></div>
+    <div class="why-item"><span class="why-icon">💬</span><h3>Seguimiento continuo</h3><p>Comunicación directa con la familia y supervisión del servicio para garantizar la mayor satisfacción posible.</p></div>
+    <div class="why-item"><span class="why-icon">⚡</span><h3>Respuesta rápida</h3><p>Entendemos la urgencia. Respondemos en minutos y gestionamos el servicio con la mayor prontitud posible.</p></div>
+  </div>
+</section>
+
+<!-- ═══════════════ CONTACT ═══════════════ -->
+<section id="contacto" class="contact">
+  <div class="contact-card">
+    <h2>¿Necesitas ayuda?<br>Estamos aquí para ti</h2>
+    <p>Contáctanos hoy mismo y encuentra al cuidador ideal para tu familia. Sin compromisos, con toda la confianza.</p>
+    <div class="contact-btns">
+      <a href="tel:+525615803125" class="btn btn-call">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+        Llamar: +52 56 1580 3125
+      </a>
+      <a href="https://wa.me/525615803125?text=Hola%2C%20me%20gustar%C3%ADa%20obtener%20informaci%C3%B3n%20sobre%20los%20servicios%20de%20cuidadores." class="btn btn-wa" target="_blank" rel="noopener">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        Contactar por WhatsApp
+      </a>
+      <a href="https://www.facebook.com" class="btn btn-fb" target="_blank" rel="noopener">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        Visítanos en Facebook
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ CHAT WIDGET ═══════════════ -->
+<div style="position:fixed;bottom:24px;right:24px;z-index:300;">
+  <button class="chat-trigger" id="chatTrigger" aria-label="Abrir asistente" aria-expanded="false">
+    <span class="chat-notif" id="chatNotif">1</span>
+    <svg width="27" height="27" viewBox="0 0 24 24" fill="white">
+      <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+    </svg>
+  </button>
+  <div class="chat-window" id="chatWindow" role="dialog" aria-label="Asistente Paloma">
+    <div class="chat-header">
+      <div class="chat-avatar">
+        <svg width="22" height="22" viewBox="0 0 46 46" fill="none">
+          <path d="M23 37S10 28 10 20A7 7 0 0123 15a7 7 0 0113 5C36 28 23 37 23 37z" fill="white" opacity=".9"/>
+          <rect x="20.5" y="23" width="5" height="2" rx="1" fill="white"/>
+          <rect x="22" y="21" width="2" height="6" rx="1" fill="white"/>
+        </svg>
+      </div>
+      <div class="chat-hinfo">
+        <div class="chat-hname">Asistente Paloma</div>
+        <div class="chat-hstatus" id="chatStatus"><span class="chat-sdot"></span> En línea · responde en segundos</div>
+      </div>
+      <button class="chat-close" id="chatClose" aria-label="Cerrar chat">✕</button>
+    </div>
+    <div class="chat-body" id="chatBody"></div>
+    <div class="chat-input-row">
+      <input class="chat-input" id="chatInput" type="text" placeholder="Escribe tu pregunta…" autocomplete="off" aria-label="Mensaje"/>
+      <button class="chat-send" id="chatSend" aria-label="Enviar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+      </button>
+    </div>
+    <a class="chat-wa-cta"
+       href="https://wa.me/525615803125?text=Hola%2C%20me%20gustar%C3%ADa%20obtener%20informaci%C3%B3n%20sobre%20los%20servicios%20de%20cuidadores."
+       target="_blank" rel="noopener">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      Hablar por WhatsApp
+    </a>
+  </div>
+</div>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  <span class="footer-logo">PALOMA</span>
+  <p>Agencia de Enfermería y Cuidadores · Ciudad de México</p>
+  <p style="margin-top:6px"><a href="tel:+525615803125">+52 56 1580 3125</a></p>
+  <p class="footer-copy">© 2025 PALOMA. Todos los derechos reservados.</p>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ═══════════════════════════════════════════════════════
+     CONFIGURACIÓN – API key de Anthropic para activar la IA
+     Deja vacío ('') para usar respuestas predefinidas.
+     ═══════════════════════════════════════════════════════ */
+  var API_KEY    = '';          /* ← 'sk-ant-api03-...' */
+  var AI_MODEL   = 'claude-haiku-4-5-20251001';
+  var AI_MAX_TOK = 300;
+
+  var SYSTEM = [
+    'Eres "Asistente Paloma", el asistente virtual de PALOMA,',
+    'una agencia de enfermería y cuidadores domiciliarios en la Ciudad de México.',
+    '',
+    'Personalidad: cálida, empática, profesional y directa.',
+    'Responde SIEMPRE en español. Sé breve: máximo 2-3 oraciones.',
+    'No uses markdown. Puedes usar máximo 1 emoji por mensaje.',
+    '',
+    'INFORMACIÓN DE LA EMPRESA:',
+    '- WhatsApp y teléfono: +52 56 1580 3125',
+    '- Servicios: cuidadores de adultos mayores, enfermería domiciliaria,',
+    '  cuidados post-operatorios, guardias nocturnas,',
+    '  cuidados para personas con discapacidad, cuidados pediátricos.',
+    '- Horarios: 7 días de la semana, turnos día / noche / 24 horas.',
+    '- Cobertura: zona metropolitana de la Ciudad de México.',
+    '- Precios: varían por servicio y horas; se cotizan directamente.',
+    '',
+    'REGLAS:',
+    '- Precios exactos → invita a cotizar por WhatsApp.',
+    '- Disponibilidad inmediata → sugiere escribir ahora al WhatsApp.',
+    '- Pregunta fuera de alcance → invita a llamar al +52 56 1580 3125.',
+    '- Nunca inventes precios, datos ni zonas que no estén arriba.'
+  ].join('\n');
+
+  var FAQS = [
+    { label: '¿Qué servicios ofrecen?',
+      fallback: 'Ofrecemos cuidadores a domicilio, enfermería domiciliaria, acompañamiento a adultos mayores, cuidados post-operatorios y atención por turnos. 🏥' },
+    { label: '¿Cuáles son los precios?',
+      fallback: 'Los precios varían según el servicio y las horas. Te recomiendo cotizar directamente por WhatsApp para darte un precio exacto. 💬' },
+    { label: '¿Qué horarios manejan?',
+      fallback: 'Atendemos los 7 días de la semana con turnos de día, noche o 24 horas. ⏰' },
+    { label: '¿En qué zonas dan servicio?',
+      fallback: 'Tenemos cobertura en la zona metropolitana de la Ciudad de México. 📍' },
+    { label: '¿Cómo contrato?',
+      fallback: 'Escríbenos por WhatsApp al +52 56 1580 3125 o llámanos y te atendemos de inmediato. 📲' }
+  ];
+
+  var isOpen  = false;
+  var inited  = false;
+  var busy    = false;
+  var history = [];
+
+  var trigger   = document.getElementById('chatTrigger');
+  var win       = document.getElementById('chatWindow');
+  var closeBtn  = document.getElementById('chatClose');
+  var bodyEl    = document.getElementById('chatBody');
+  var inputEl   = document.getElementById('chatInput');
+  var sendBtn   = document.getElementById('chatSend');
+  var notifEl   = document.getElementById('chatNotif');
+  var statusEl  = document.getElementById('chatStatus');
+
+  function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function scroll() { bodyEl.scrollTop = bodyEl.scrollHeight; }
+
+  function setStatus(txt, color) {
+    if (statusEl) statusEl.innerHTML = '<span class="chat-sdot" style="background:' + color + '"></span> ' + txt;
+  }
+
+  function addMsg(html, side) {
+    var el = document.createElement('div');
+    el.className = 'cmsg ' + side;
+    el.innerHTML = side === 'bot'
+      ? '<div class="cmsg-icon">🤍</div><div class="cmsg-bubble">' + html + '</div>'
+      : '<div class="cmsg-bubble">' + html + '</div>';
+    bodyEl.appendChild(el);
+    scroll();
+    return el;
+  }
+
+  function showTyping() {
+    var el = document.createElement('div');
+    el.className = 'cmsg bot typing';
+    el.innerHTML = '<div class="cmsg-icon">🤍</div><div class="cmsg-bubble"><div class="tdots"><span></span><span></span><span></span></div></div>';
+    bodyEl.appendChild(el);
+    scroll();
+    return el;
+  }
+
+  function clearFAQs() { bodyEl.querySelectorAll('.faq-grid').forEach(function(e){ e.remove(); }); }
+
+  function addFAQs() {
+    var grid = document.createElement('div');
+    grid.className = 'faq-grid';
+    FAQS.forEach(function(faq) {
+      var btn = document.createElement('button');
+      btn.className = 'faq-btn';
+      btn.textContent = faq.label;
+      btn.addEventListener('click', function(){ send(faq.label); });
+      grid.appendChild(btn);
+    });
+    bodyEl.appendChild(grid);
+    scroll();
+  }
+
+  function askClaude(text, cb) {
+    history.push({ role: 'user', content: text });
+    fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'x-api-key': API_KEY,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-allow-browser': 'true'
+      },
+      body: JSON.stringify({
+        model: AI_MODEL, max_tokens: AI_MAX_TOK,
+        system: SYSTEM, messages: history.slice(-12)
+      })
+    })
+    .then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function(d){
+      var t = d.content && d.content[0] && d.content[0].text
+              ? d.content[0].text
+              : 'Lo siento, hubo un error. Contáctanos por WhatsApp. 😊';
+      history.push({ role: 'assistant', content: t });
+      cb(null, t);
+    })
+    .catch(function(e){ cb(e); });
+  }
+
+  var KEY_MAP = [
+    { keys:['servicio','ofrecen','hacen','tienen','brindan'], i:0 },
+    { keys:['precio','costo','cobran','cuanto','cuánto','tarifa','pagar'], i:1 },
+    { keys:['horario','turno','hora','noche','dia','día','disponibilidad'], i:2 },
+    { keys:['zona','area','donde','dónde','colonia','cdmx','edomex','metro'], i:3 },
+    { keys:['contratar','contrato','solicitar','pedir','reservar','agendar','como','cómo'], i:4 }
+  ];
+
+  function norm(s){ return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[¿?¡!]/g,''); }
+
+  function fallback(text) {
+    var t = norm(text);
+    for (var i=0;i<KEY_MAP.length;i++)
+      for (var j=0;j<KEY_MAP[i].keys.length;j++)
+        if (t.indexOf(KEY_MAP[i].keys[j]) !== -1) return FAQS[KEY_MAP[i].i].fallback;
+    return 'No tengo una respuesta exacta, pero en WhatsApp te ayudamos enseguida al +52 56 1580 3125. 😊';
+  }
+
+  function send(text) {
+    if (busy || !text) return;
+    busy = true;
+    clearFAQs();
+    addMsg(esc(text), 'user');
+    var typing = showTyping();
+    inputEl.disabled = true;
+    sendBtn.disabled = true;
+
+    function done(html) {
+      typing.remove();
+      addMsg(html, 'bot');
+      setTimeout(addFAQs, 360);
+      inputEl.disabled = false;
+      sendBtn.disabled = false;
+      inputEl.focus();
+      busy = false;
+    }
+
+    if (API_KEY) {
+      setStatus('Escribiendo…', '#FBBF24');
+      askClaude(text, function(err, reply) {
+        setStatus('IA activa · responde al instante', '#4ADE80');
+        done(err ? fallback(text) : esc(reply).replace(/\n/g,'<br>'));
+      });
+    } else {
+      setTimeout(function(){ done(fallback(text)); }, 900);
+    }
+  }
+
+  function handleSend() {
+    var t = inputEl.value.trim();
+    if (!t) return;
+    inputEl.value = '';
+    send(t);
+  }
+
+  function init() {
+    if (inited) return;
+    inited = true;
+    if (API_KEY) setStatus('IA activa · responde al instante', '#4ADE80');
+    addMsg('¡Hola! 👋 Soy el asistente de <strong>PALOMA</strong>. '
+      + (API_KEY ? 'Puedo responder cualquier pregunta sobre nuestros servicios.'
+                 : '¿En qué puedo ayudarte hoy?'), 'bot');
+    setTimeout(addFAQs, 420);
+  }
+
+  function openChat() {
+    isOpen = true;
+    win.classList.add('open');
+    trigger.setAttribute('aria-expanded','true');
+    if (notifEl) { notifEl.remove(); notifEl = null; }
+    init();
+    setTimeout(function(){ inputEl.focus(); }, 330);
+  }
+
+  function closeChat() {
+    isOpen = false;
+    win.classList.remove('open');
+    trigger.setAttribute('aria-expanded','false');
+  }
+
+  trigger.addEventListener('click', function(){ isOpen ? closeChat() : openChat(); });
+  closeBtn.addEventListener('click', closeChat);
+  sendBtn.addEventListener('click', handleSend);
+  inputEl.addEventListener('keydown', function(e){ if (e.key==='Enter') handleSend(); });
+  document.addEventListener('click', function(e){
+    if (isOpen && !win.contains(e.target) && !trigger.contains(e.target)) closeChat();
+  });
+  document.addEventListener('keydown', function(e){ if (e.key==='Escape' && isOpen) closeChat(); });
+
+  if (window.innerWidth > 820 && !sessionStorage.getItem('paloma_chat')) {
+    setTimeout(function(){ sessionStorage.setItem('paloma_chat','1'); openChat(); }, 4000);
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+# Archivos de assets locales pesados (no se publican)
+*.png
+*.jpg
+*.jpeg
+*.mp4
+*.webm
+*.gif
+.DS_Store
+
+# Assets del sitio que SÍ van a Vercel
+!logo.png
+!video-problema-solucion.mp4
