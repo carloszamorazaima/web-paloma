@@ -850,10 +850,6 @@
   closeBtn.addEventListener('click', closeChat);
   sendBtn.addEventListener('click', handleSend);
   inputEl.addEventListener('keydown', function(e){ if (e.key==='Enter') handleSend(); });
-  document.addEventListener('click', function(e){
-    if (isOpen && !win.contains(e.target) && !trigger.contains(e.target)) closeChat();
-  });
-  document.addEventListener('keydown', function(e){ if (e.key==='Escape' && isOpen) closeChat(); });
 
   if (window.innerWidth > 820 && !sessionStorage.getItem('paloma_chat')) {
     setTimeout(function(){ sessionStorage.setItem('paloma_chat','1'); openChat(); }, 4000);
