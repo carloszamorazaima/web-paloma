@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paloma - Agencia de Enfermería y Cuidadores</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f0f4ff 0%, #e8f0fe 50%, #dce8ff 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Círculo decorativo fondo */
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(100, 160, 255, 0.12) 0%, transparent 70%);
+            top: -150px;
+            right: -150px;
+            border-radius: 50%;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(100, 200, 180, 0.1) 0%, transparent 70%);
+            bottom: -100px;
+            left: -100px;
+            border-radius: 50%;
+        }
+
+        .hero-inner {
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Columna texto */
+        .hero-text .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(99, 143, 255, 0.12);
+            color: #3a6fd8;
+            border: 1px solid rgba(99, 143, 255, 0.3);
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+
+        .hero-text .badge::before {
+            content: '✦';
+            font-size: 0.7rem;
+        }
+
+        .hero-text h1 {
+            font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+            color: #1a2a4a;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 20px;
+        }
+
+        .hero-text h1 span {
+            color: #3a6fd8;
+        }
+
+        .hero-text p {
+            font-size: 1.05rem;
+            color: #4a5a7a;
+            line-height: 1.8;
+            margin-bottom: 36px;
+            max-width: 480px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: #3a6fd8;
+            color: #fff;
+            padding: 14px 32px;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+            box-shadow: 0 4px 20px rgba(58, 111, 216, 0.35);
+        }
+
+        .btn-primary:hover {
+            background: #2a5cc0;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(58, 111, 216, 0.45);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #3a6fd8;
+            padding: 14px 32px;
+            border: 2px solid #3a6fd8;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: #3a6fd8;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        /* Stats */
+        .hero-stats {
+            display: flex;
+            gap: 32px;
+            margin-top: 48px;
+            padding-top: 32px;
+            border-top: 1px solid rgba(58, 111, 216, 0.15);
+        }
+
+        .stat h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #1a2a4a;
+        }
+
+        .stat p {
+            font-size: 0.85rem;
+            color: #7a8aaa;
+            margin-bottom: 0;
+        }
+
+        /* Columna imagen / card visual */
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-card {
+            background: #fff;
+            border-radius: 24px;
+            padding: 36px;
+            box-shadow: 0 20px 60px rgba(58, 111, 216, 0.12);
+            max-width: 380px;
+            width: 100%;
+        }
+
+        .hero-card .card-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #3a6fd8, #6aa0ff);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .hero-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1a2a4a;
+            margin-bottom: 10px;
+        }
+
+        .hero-card p {
+            font-size: 0.9rem;
+            color: #6a7a9a;
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        .services-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .services-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: #3a4a6a;
+            font-weight: 500;
+        }
+
+        .services-list li::before {
+            content: '✓';
+            width: 22px;
+            height: 22px;
+            background: linear-gradient(135deg, #3a6fd8, #6aa0ff);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-inner {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-text p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .hero-visual {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero">
+        <div class="hero-inner">
+
+            <!-- Texto principal -->
+            <div class="hero-text">
+                <span class="badge">Agencia de Enfermería y Cuidadores</span>
+                <h1>Seguridad y <span>confianza</span> en cada servicio</h1>
+                <p>Confía en nuestro equipo para cuidar de ti o de tus seres queridos. Contamos con los más altos estándares de calidad y personal certificado.</p>
+                <div class="hero-buttons">
+                    <a href="#contacto" class="btn-primary">Solicitar servicio</a>
+                    <a href="#servicios" class="btn-secondary">Ver servicios</a>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="stat">
+                        <h3>+500</h3>
+                        <p>Pacientes atendidos</p>
+                    </div>
+                    <div class="stat">
+                        <h3>+10</h3>
+                        <p>Años de experiencia</p>
+                    </div>
+                    <div class="stat">
+                        <h3>24/7</h3>
+                        <p>Disponibilidad</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visual / Card -->
+            <div class="hero-visual">
+                <div class="hero-card">
+                    <div class="card-icon">🩺</div>
+                    <h3>Nuestros Servicios</h3>
+                    <p>Cuidado profesional y personalizado para cada necesidad.</p>
+                    <ul class="services-list">
+                        <li>Enfermería a domicilio</li>
+                        <li>Cuidadores especializados</li>
+                        <li>Atención a adultos mayores</li>
+                        <li>Rehabilitación en casa</li>
+                        <li>Apoyo post-operatorio</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</body>
+</html>
